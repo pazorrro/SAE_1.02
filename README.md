@@ -2,7 +2,7 @@
 
 # Ce qui a été fait
 
-- Version de base SAUF Hasse
+- Version de base SAUF Hasse (regarder si elles sont toutes optimisées comme demander)
 - Extention 1
 - Extention 2 -> avecBoucleBis, sansBoucleBis, unionBis, intersectionBis, complementaireBis, differenceBis
 
