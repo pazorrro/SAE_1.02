@@ -294,7 +294,6 @@ public class RelationBinaire {
     //______________________________________________
 
 
-
     // B) Théorie des ensembles
     //--------------------------
 
@@ -393,6 +392,10 @@ public class RelationBinaire {
         return r;
     }
 
+    public RelationBinaire sansBouclesBis() { // fonction à faire
+        return this;
+    }
+
 
     //______________________________________________
 
@@ -428,12 +431,16 @@ public class RelationBinaire {
         RelationBinaire r1 = new RelationBinaire(new boolean[this.matAdj.length][this.matAdj.length]);
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.n; j++) {
-                if (r.matAdj[i][j] == this.matAdj[i][j]) {
+                if (r.matAdj[i][j] == true && this.matAdj[i][j] == true) {
                     r1.ajouteCouple(i, j);
                 }
             }
         }
         return r1;
+    }
+
+    public RelationBinaire intersectionBis(RelationBinaire r) {
+        return new RelationBinaire((opBool(this.matAdj, r.matAdj, 2)));
     }
 
     //______________________________________________
@@ -753,8 +760,8 @@ public class RelationBinaire {
 
     //______________________________________________
 
-      /////////////////////////////////
-     // Toutes les autres extensions//
+    /////////////////////////////////
+    // Toutes les autres extensions//
     /////////////////////////////////
 
 
@@ -818,8 +825,8 @@ public class RelationBinaire {
         System.out.println(r1.toString());
         System.out.println(r3.toString());
 
-        System.out.println(r1.unionBis(r3).toString());
-
+        System.out.println(r1.intersection(r3).toString());
+        System.out.println(r1.intersectionBis(r3).toString());
 
 
 //        System.out.println(r1.estTransitive());

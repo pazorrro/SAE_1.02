@@ -423,7 +423,7 @@ public class RelationBinaire {
         RelationBinaire r1 = new RelationBinaire(new boolean[this.matAdj.length][this.matAdj.length]);
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.n; j++) {
-                if (r.matAdj[i][j] == this.matAdj[i][j]) {
+                if (r.matAdj[i][j] == true && this.matAdj[i][j] == true) {
                     r1.ajouteCouple(i, j);
                 }
             }
