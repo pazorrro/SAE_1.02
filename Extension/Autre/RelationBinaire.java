@@ -293,25 +293,6 @@ public class RelationBinaire {
 
     //______________________________________________
 
-    // EXTENTION DESCENDANT
-    public EE descendant(int x) {
-        EE totSucc = new EE(n);
-        if (tabSucc[n] != null) {
-            totSucc = totSucc.union(tabSucc[n]);
-            for (int j = 0; j < totSucc.getCardinal(); j++) {
-                if (j < totSucc.getCardinal()) {
-                    for (int k = 0; k < n; k++) {
-                        EE successeur = new EE(tabSucc[k].getCardinal());
-                        if (totSucc.contient(k)) {
-                            successeur = succ(k);
-                        }
-                        totSucc = totSucc.union(successeur);
-                    }
-                }
-            }
-        }
-        return totSucc;
-    }
 
 
     // B) Théorie des ensembles
@@ -392,7 +373,6 @@ public class RelationBinaire {
         return r;
     }
 
-
     public RelationBinaire avecBouclesBis() {
         return new RelationBinaire(opBool(this.matAdj, new RelationBinaire(this.n, true).matAdj, 1));
     }
@@ -413,6 +393,7 @@ public class RelationBinaire {
         return r;
     }
 
+
     //______________________________________________
 
 
@@ -430,6 +411,10 @@ public class RelationBinaire {
             }
         }
         return r1;
+    }
+
+    public RelationBinaire unionBis(RelationBinaire r) {
+        return new RelationBinaire((opBool(this.matAdj, r.matAdj, 1)));
     }
 
     //______________________________________________
@@ -768,6 +753,31 @@ public class RelationBinaire {
 
     //______________________________________________
 
+      /////////////////////////////////
+     // Toutes les autres extensions//
+    /////////////////////////////////
+
+
+    // EXTENTION DESCENDANT
+    public EE descendant(int x) {
+        EE totSucc = new EE(n);
+        if (tabSucc[n] != null) {
+            totSucc = totSucc.union(tabSucc[n]);
+            for (int j = 0; j < totSucc.getCardinal(); j++) {
+                if (j < totSucc.getCardinal()) {
+                    for (int k = 0; k < n; k++) {
+                        EE successeur = new EE(tabSucc[k].getCardinal());
+                        if (totSucc.contient(k)) {
+                            successeur = succ(k);
+                        }
+                        totSucc = totSucc.union(successeur);
+                    }
+                }
+            }
+        }
+        return totSucc;
+    }
+
     public static void main(String[] args) {
 
 
@@ -800,19 +810,25 @@ public class RelationBinaire {
 
 
         boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
-        boolean[][] m2 = {{false, true, false, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
+        boolean[][] m2 = {{true, true, false, true}, {true, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
         RelationBinaire r3 = new RelationBinaire(m2);
 
-
-        System.out.println(r1.estTransitive());
         System.out.println(r1.toString());
-        System.out.println(r3.estTransitive());
         System.out.println(r3.toString());
-        RelationBinaire fertrans = r3.ferTrans();
-        System.out.println(fertrans.toString());
-        System.out.println(fertrans.estTransitive());
+
+        System.out.println(r1.unionBis(r3).toString());
+
+
+
+//        System.out.println(r1.estTransitive());
+
+//        System.out.println(r3.estTransitive());
+
+//        RelationBinaire fertrans = r3.ferTrans();
+//        System.out.println(fertrans.toString());
+//        System.out.println(fertrans.estTransitive());
 
 
 //        System.out.println("R1 = " + r1.toString());
