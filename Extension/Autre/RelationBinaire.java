@@ -393,7 +393,8 @@ public class RelationBinaire {
     }
 
     public RelationBinaire sansBouclesBis() { // fonction à faire
-        return this;
+        RelationBinaire r1 = new RelationBinaire(opBool(new RelationBinaire(n, true).matAdj, new RelationBinaire(n, true).matAdj, 3));
+        return new RelationBinaire(opBool(this.matAdj, r1.matAdj, 2));
     }
 
 
@@ -461,6 +462,7 @@ public class RelationBinaire {
         }
         return r1;
     }
+
     public RelationBinaire complementaireBis() {
 
         RelationBinaire r1 = new RelationBinaire(this);
@@ -488,6 +490,11 @@ public class RelationBinaire {
         r1 = new RelationBinaire(r1.tabSucc);
 
         return r1;
+    }
+
+    public RelationBinaire differenceBis(RelationBinaire r) {
+        RelationBinaire r1 = new RelationBinaire(opBool(r.matAdj, r.matAdj, 3));
+        return new RelationBinaire(opBool(this.matAdj, r1.matAdj, 2));
     }
 
     //______________________________________________
@@ -829,18 +836,20 @@ public class RelationBinaire {
 
 
         boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
-        boolean[][] m2 = {{true, true, false, true}, {true, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
+        boolean[][] m2 = {{true, true, false, true}, {true, true, true, true}, {false, true, true, true,}, {true, false, false, true}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
         RelationBinaire r3 = new RelationBinaire(m2);
 
+
+        System.out.println(r3.toString());
         System.out.println(r1.toString());
 //        System.out.println(r3.toString());
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r1.complementaire().toString());
-        System.out.println(r1.complementaireBis().toString());
+        System.out.println(r3.difference(r1).toString());
+        System.out.println(r3.differenceBis(r1).toString());
 
 
 //        System.out.println(r1.estTransitive());
