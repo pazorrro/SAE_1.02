@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class RelationBinaire {
 
     // attributs
@@ -334,7 +336,7 @@ public class RelationBinaire {
      * pré-requis : 0 <= x < this.n et 0 <= y < this.n
      * résultat : ajoute (x,y) à this s'il n'y est pas déjà
      */
-    public void ajouteCouple(int x, int y){
+    public void ajouteCouple(int x, int y) {
         if (!this.appartient(x, y)) {
             this.matAdj[x][y] = true;
             this.tabSucc[x].ajoutElt(y);
@@ -364,7 +366,7 @@ public class RelationBinaire {
      * résultat : une nouvelle relation binaire obtenue à partir de this en ajoutant
      * les couples de la forme  (x,x) qui n'y sont pas déjà
      */
-    public RelationBinaire avecBoucles(){
+    public RelationBinaire avecBoucles() {
         RelationBinaire r = new RelationBinaire(this.matAdj);
         for (int i = 0; i < this.n; i++) {
             r.ajouteCouple(i, i);
@@ -372,10 +374,6 @@ public class RelationBinaire {
         return r;
     }
 
-
-    public RelationBinaire avecBouclesBis(){
-        return new RelationBinaire(opBool(this.matAdj, new RelationBinaire(this.n, true).matAdj, 1));
-    }
     //______________________________________________
 
 
@@ -401,15 +399,11 @@ public class RelationBinaire {
      * résultat : l'union de this et r
      */
     public RelationBinaire union(RelationBinaire r) {
-        RelationBinaire r1 = new RelationBinaire(this.matAdj);
-        for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
-                if (r.appartient(i, j)) {
-                    r1.ajouteCouple(i, j);
-                }
-            }
+        RelationBinaire r1 = new RelationBinaire(this);
+        for (int i = 0; i < n; i++) {
+            r1.tabSucc[i] = r1.tabSucc[i].union(r.tabSucc[i]);
         }
-        return r1;
+        return new RelationBinaire(r1.tabSucc);
     }
 
     //______________________________________________
@@ -420,16 +414,14 @@ public class RelationBinaire {
      * résultat : l'intersection de this et r
      */
     public RelationBinaire intersection(RelationBinaire r) {
-        RelationBinaire r1 = new RelationBinaire(new boolean[this.matAdj.length][this.matAdj.length]);
-        for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
-                if (r.matAdj[i][j] == true && this.matAdj[i][j] == true) {
-                    r1.ajouteCouple(i, j);
-                }
-            }
+        RelationBinaire r1 = new RelationBinaire(this);
+        for (int i = 0; i < n; i++) {
+            r1.tabSucc[i] = r1.tabSucc[i].intersection(r.tabSucc[i]);
         }
-        return r1;
+
+        return new RelationBinaire(r1.tabSucc);
     }
+
 
     //______________________________________________
 
@@ -457,15 +449,11 @@ public class RelationBinaire {
      * résultat : la différence de this et r
      */
     public RelationBinaire difference(RelationBinaire r) {
-
         RelationBinaire r1 = new RelationBinaire(this);
         for (int i = 0; i < this.n; i++) {
             r1.tabSucc[i] = new EE(this.tabSucc[i].difference(r.tabSucc[i]));
         }
-
-        r1 = new RelationBinaire(r1.tabSucc);
-
-        return r1;
+        return new RelationBinaire(r1.tabSucc);
     }
 
     //______________________________________________
@@ -683,7 +671,7 @@ public class RelationBinaire {
                         }
                     }
                 }
-                while(!totSucc.estVide()){
+                while (!totSucc.estVide()) {
                     r.tabSucc[i].ajoutElt(totSucc.retraitUnElt());
                 }
             }
@@ -782,14 +770,14 @@ public class RelationBinaire {
 
 
         boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
-        boolean[][] m2 = {{false, true, false, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
+        boolean[][] m2 = {{false, true, false, true}, {false, false, true, true}, {false, false, false, true,}, {true, true, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
         RelationBinaire r3 = new RelationBinaire(m2);
 
-        RelationBinaire r2 = r1.avecBouclesBis();
         System.out.println(r1.toString());
-        System.out.println(r2.toString());
+        System.out.println(r3.toString());
+        System.out.println(r1.intersection(r3).toString());
 
 //        System.out.println(r1.estTransitive());
 //        System.out.println(r1.toString());

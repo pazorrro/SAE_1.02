@@ -406,15 +406,11 @@ public class RelationBinaire {
      * résultat : l'union de this et r
      */
     public RelationBinaire union(RelationBinaire r) {
-        RelationBinaire r1 = new RelationBinaire(this.matAdj);
-        for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
-                if (r.appartient(i, j)) {
-                    r1.ajouteCouple(i, j);
-                }
-            }
+        RelationBinaire r1 = new RelationBinaire(this);
+        for (int i = 0; i < n; i++) {
+            r1.tabSucc[i] = r1.tabSucc[i].union(r.tabSucc[i]);
         }
-        return r1;
+        return new RelationBinaire(r1.tabSucc);
     }
 
     public RelationBinaire unionBis(RelationBinaire r) {
@@ -429,15 +425,12 @@ public class RelationBinaire {
      * résultat : l'intersection de this et r
      */
     public RelationBinaire intersection(RelationBinaire r) {
-        RelationBinaire r1 = new RelationBinaire(new boolean[this.matAdj.length][this.matAdj.length]);
-        for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
-                if (r.matAdj[i][j] == true && this.matAdj[i][j] == true) {
-                    r1.ajouteCouple(i, j);
-                }
-            }
+        RelationBinaire r1 = new RelationBinaire(this);
+        for (int i = 0; i < n; i++) {
+            r1.tabSucc[i] = r1.tabSucc[i].intersection(r.tabSucc[i]);
         }
-        return r1;
+
+        return new RelationBinaire(r1.tabSucc);
     }
 
     public RelationBinaire intersectionBis(RelationBinaire r) {
@@ -486,10 +479,7 @@ public class RelationBinaire {
         for (int i = 0; i < this.n; i++) {
             r1.tabSucc[i] = new EE(this.tabSucc[i].difference(r.tabSucc[i]));
         }
-
-        r1 = new RelationBinaire(r1.tabSucc);
-
-        return r1;
+        return new RelationBinaire(r1.tabSucc);
     }
 
     public RelationBinaire differenceBis(RelationBinaire r) {
