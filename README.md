@@ -10,7 +10,7 @@
 
 - Hasse pour la version base
 - Extention 2 -> estIncluseBis, estEgaleBis, succBis, predBis, estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, 
-estAntisymetriqueBis, estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, descendantBis
+estAntisymetriqueBis, estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, afficheDiversBis, descendantBis
 - Extention 3
 - Extention 4
 - Extension 5
