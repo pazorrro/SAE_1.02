@@ -450,7 +450,18 @@ public class RelationBinaire {
      * pré-requis : aucun
      * résultat : la relation complémentaire de this
      */
+
     public RelationBinaire complementaire() {
+
+        RelationBinaire r1 = new RelationBinaire(this);
+        for (int i = 0; i < this.n; i++) {
+            for (int j = 0; j < this.n; j++) {
+                r1.matAdj[i][j] = !this.matAdj[i][j];
+            }
+        }
+        return r1;
+    }
+    public RelationBinaire complementaireBis() {
 
         RelationBinaire r1 = new RelationBinaire(this);
         r1.matAdj = opBool(r1.matAdj, r1.matAdj, 3); // on utilise la fonction opBool qui nous donne la négation
@@ -458,6 +469,7 @@ public class RelationBinaire {
 
         return r1;
     }
+
 
     //______________________________________________
 
@@ -823,10 +835,12 @@ public class RelationBinaire {
         RelationBinaire r3 = new RelationBinaire(m2);
 
         System.out.println(r1.toString());
-        System.out.println(r3.toString());
+//        System.out.println(r3.toString());
 
-        System.out.println(r1.intersection(r3).toString());
-        System.out.println(r1.intersectionBis(r3).toString());
+//        System.out.println(r1.intersection(r3).toString());
+//        System.out.println(r1.intersectionBis(r3).toString());
+        System.out.println(r1.complementaire().toString());
+        System.out.println(r1.complementaireBis().toString());
 
 
 //        System.out.println(r1.estTransitive());

@@ -441,9 +441,11 @@ public class RelationBinaire {
     public RelationBinaire complementaire() {
 
         RelationBinaire r1 = new RelationBinaire(this);
-        r1.matAdj = opBool(r1.matAdj, r1.matAdj, 3); // on utilise la fonction opBool qui nous donne la négation
-        r1.tabSucc = new RelationBinaire(r1).tabSucc; // on créé les tabsucc grâce aux constructeurs
-
+        for (int i = 0; i < this.n; i++) {
+            for (int j = 0; j < this.n; j++) {
+                r1.matAdj[i][j] = !this.matAdj[i][j];
+            }
+        }
         return r1;
     }
 
