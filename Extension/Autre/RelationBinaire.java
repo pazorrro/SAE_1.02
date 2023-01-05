@@ -61,12 +61,8 @@ public class RelationBinaire {
         this(nb);
         if (egal == true) {
             for (int i = 0; i < nb; i++) {
-                for (int j = 0; j < nb; j++) {
-                    if (i == j) {
-                        this.matAdj[i][j] = true;
-                        this.m++;
-                    }
-                }
+                this.matAdj[i][i] = true;
+                this.m++;
             }
         } else {
             for (int i = 0; i < nb; i++) {
@@ -79,7 +75,9 @@ public class RelationBinaire {
             }
         }
         // construction de tabSucc
-        for (int i = 0; i < nb; i++) {
+        for (
+                int i = 0;
+                i < nb; i++) {
             this.tabSucc[i] = new EE(nb);
             for (int j = 0; j < nb; j++) {
                 if (this.matAdj[i][j] == true) {
@@ -90,7 +88,7 @@ public class RelationBinaire {
 
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -114,7 +112,7 @@ public class RelationBinaire {
         }
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -135,7 +133,7 @@ public class RelationBinaire {
         }
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -155,10 +153,10 @@ public class RelationBinaire {
     }
 
 
-    //______________________________________________
+//______________________________________________
 
 
-    // méthodes
+// méthodes
 
 
     /**
@@ -199,11 +197,11 @@ public class RelationBinaire {
         return s;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
-    // A) Logique et calcul matriciel
-    //-------------------------------
+// A) Logique et calcul matriciel
+//-------------------------------
 
 
     /**
@@ -245,7 +243,7 @@ public class RelationBinaire {
 
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -268,7 +266,7 @@ public class RelationBinaire {
         return matrice;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -291,11 +289,11 @@ public class RelationBinaire {
 
     }
 
-    //______________________________________________
+//______________________________________________
 
 
-    // B) Théorie des ensembles
-    //--------------------------
+// B) Théorie des ensembles
+//--------------------------
 
 
     /**
@@ -306,7 +304,7 @@ public class RelationBinaire {
         return this.m == 0;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -317,7 +315,7 @@ public class RelationBinaire {
         return this.m == this.n * this.n;
     }
 
-    //______________________________________________
+//______________________________________________
 
     /**
      * pré-requis : aucun
@@ -327,7 +325,7 @@ public class RelationBinaire {
         return this.matAdj[x][y];
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -342,7 +340,7 @@ public class RelationBinaire {
         }
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -356,7 +354,7 @@ public class RelationBinaire {
         }
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -375,7 +373,7 @@ public class RelationBinaire {
     public RelationBinaire avecBouclesBis() {
         return new RelationBinaire(opBool(this.matAdj, new RelationBinaire(this.n, true).matAdj, 1));
     }
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -398,7 +396,7 @@ public class RelationBinaire {
     }
 
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -417,7 +415,7 @@ public class RelationBinaire {
         return new RelationBinaire((opBool(this.matAdj, r.matAdj, 1)));
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -437,7 +435,7 @@ public class RelationBinaire {
         return new RelationBinaire((opBool(this.matAdj, r.matAdj, 2)));
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -466,7 +464,7 @@ public class RelationBinaire {
     }
 
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -487,7 +485,7 @@ public class RelationBinaire {
         return new RelationBinaire(opBool(this.matAdj, r1.matAdj, 2));
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -504,11 +502,10 @@ public class RelationBinaire {
     public boolean estIncluseBis(RelationBinaire r) {
         RelationBinaire r1 = new RelationBinaire(opBool(this.matAdj, r.matAdj, 2));
         RelationBinaire r2 = new RelationBinaire(opBool(r1.matAdj, r1.matAdj, 3));
-        r2 = new RelationBinaire(opBool(r1.matAdj, r2.matAdj, 2));
-        return (r2.estVide());
+        return (new RelationBinaire(opBool(r1.matAdj, r2.matAdj, 2)).estVide());
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -521,16 +518,18 @@ public class RelationBinaire {
         }
         return true;
     }
-    public boolean estEgaleBis(RelationBinaire r){
+
+    public boolean estEgaleBis(RelationBinaire r) {
         RelationBinaire r1 = new RelationBinaire(opBool(r.matAdj, r.matAdj, 3));
         return new RelationBinaire(opBool(this.matAdj, r1.matAdj, 2)).estVide();
     }
 
-    //______________________________________________
+
+//______________________________________________
 
 
-    // C) Théorie des graphes orientés
-    //---------------------------------
+// C) Théorie des graphes orientés
+//---------------------------------
 
     /**
      * pré-requis : 0 <= x < this.n
@@ -541,7 +540,11 @@ public class RelationBinaire {
         return new EE(this.tabSucc[x]);
     }
 
-    //______________________________________________
+    public EE succBis(int x) {
+        return new EE(this.tabSucc[x]);
+    } // on peut rien modifier si ?
+
+//______________________________________________
 
 
     /**
@@ -558,11 +561,11 @@ public class RelationBinaire {
         return e;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
-    // D) Relation binaire
-    //---------------------
+// D) Relation binaire
+//---------------------
 
     /**
      * pré-requis : aucun
@@ -575,7 +578,13 @@ public class RelationBinaire {
         return true;
     }
 
-    //______________________________________________
+    public boolean estReflexiveBis() {
+        RelationBinaire r1 = new RelationBinaire(this.n, true);
+        return r1.estIncluse(this);
+    }
+
+
+//______________________________________________
 
 
     /**
@@ -589,7 +598,7 @@ public class RelationBinaire {
         return true;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -605,7 +614,7 @@ public class RelationBinaire {
         return true;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -621,7 +630,7 @@ public class RelationBinaire {
         return true;
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -655,7 +664,7 @@ public class RelationBinaire {
 
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -666,7 +675,7 @@ public class RelationBinaire {
         return this.estReflexive() && this.estAntisymetrique() && this.estTransitive();
     }
 
-    //______________________________________________
+//______________________________________________
 
 
     /**
@@ -689,7 +698,7 @@ public class RelationBinaire {
         return r.sansBoucles();
     }
 
-    //______________________________________________
+//______________________________________________
 
     /**
      * pré-requis : aucun
@@ -722,7 +731,7 @@ public class RelationBinaire {
         return finale;
     }
 
-    //______________________________________________
+//______________________________________________
 
     /**
      * pré-requis : aucun
@@ -778,11 +787,11 @@ public class RelationBinaire {
         // manque les hass
     }
 
-    //______________________________________________
+//______________________________________________
 
-    /////////////////////////////////
-    // Toutes les autres extensions//
-    /////////////////////////////////
+/////////////////////////////////
+// Toutes les autres extensions//
+/////////////////////////////////
 
 
     // EXTENTION DESCENDANT
@@ -836,7 +845,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, true, true,}, {true, false, false, false}};
+        boolean[][] m1 = {{true, true, true, true}, {false, true, true, true}, {false, false, true, true,}, {true, false, false, true}};
         boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
@@ -844,13 +853,14 @@ public class RelationBinaire {
 
 
         System.out.println(r1.toString());
-        System.out.println(r2.toString());
+        //System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r2.estEgale(r2));
-        System.out.println(r2.estEgaleBis(r2));
+        System.out.println(r1.estReflexive());
+        System.out.println(r1.estReflexiveBis());
+        //System.out.println(r2.estEgaleBis(r2));
         // est ce que r2 est incluse dans r1 ?
 
 
