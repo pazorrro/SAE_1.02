@@ -618,12 +618,13 @@ public class RelationBinaire {
     public RelationBinaire hasse() { // a revoir
         RelationBinaire r = new RelationBinaire(this.n);
         for (int i = 0; i < this.m; i++) { // premiere boucle sur A
-            for(int j = 0; i<this.m; i++) { // seconde boucle sur A
-                if(this.tabSucc[j].contient(i)){ // Si le fils (A -> B) d'un fils de A (B -> C) contient (A -> C) alors on supprime A -> C
-                    r.tabSucc[i].retraitElt(this.tabSucc[i].contientPratique(j));
+            for (int j = 0; i < this.m; i++) { // seconde boucle sur A
+                if (this.tabSucc[j].contient(i)) { // Si le fils (A -> B) d'un fils de A (B -> C) contient (A -> C) alors on supprime A -> C
+                   // r.tabSucc[i].retraitElt(this.tabSucc[i].contientPratique(j));
                 }
             }
         }
+        return r;
     }
 
     //______________________________________________
@@ -793,7 +794,7 @@ public class RelationBinaire {
 //        RelationBinaire r = new RelationBinaire(3, 0.5);
 //        System.out.println("R=" + r.toString());
 //        System.out.println("R après passage au diagramme de hasse :" + r.hasse().toString());
-
+// test
     }
 
 
