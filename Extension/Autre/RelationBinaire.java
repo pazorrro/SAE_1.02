@@ -501,6 +501,16 @@ public class RelationBinaire {
         return true;
     }
 
+    public boolean estIncluseBis(RelationBinaire r){
+        RelationBinaire r1 = new RelationBinaire(opBool(this.matAdj, r.matAdj, 2));
+
+        RelationBinaire r2 = new RelationBinaire(opBool(r1.matAdj, r1.matAdj, 3));
+        r2 = new RelationBinaire(opBool(r1.matAdj, r2.matAdj, 2));
+        return(r2.estVide());
+
+
+    }
+
     //______________________________________________
 
 
@@ -825,21 +835,22 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
-        boolean[][] m2 = {{true, true, false, true}, {true, true, true, true}, {false, true, true, true,}, {true, false, false, true}};
+        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, true, true,}, {true, false, false, false}};
+        boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
-        RelationBinaire r3 = new RelationBinaire(m2);
+        RelationBinaire r2 = new RelationBinaire(m2);
 
 
-        System.out.println(r3.toString());
         System.out.println(r1.toString());
+        System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r3.difference(r1).toString());
-        System.out.println(r3.differenceBis(r1).toString());
+        System.out.println(r2.estIncluse(r1));
+        System.out.println(r2.estIncluseBis(r1));
+        // est ce que r2 est incluse dans r1 ?
 
 
 //        System.out.println(r1.estTransitive());
