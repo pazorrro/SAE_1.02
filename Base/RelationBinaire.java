@@ -587,30 +587,14 @@ public class RelationBinaire {
      * résultat : vrai ssi this est transitive
      */
     public boolean estTransitive() {
-        for (int i = 0; i < tabSucc.length; i++) {
-            EE totSucc = new EE(n);
-            if (tabSucc[i] != null) {
-                totSucc = totSucc.union(tabSucc[i]);
-                for (int j = 0; j < totSucc.getCardinal(); j++) {
-                    if (j < totSucc.getCardinal()) {
-                        for (int k = 0; k < n; k++) {
-                            EE successeur = new EE(tabSucc[k].getCardinal());
-                            if (totSucc.contient(k)) {
-                                successeur = succ(k);
-                            }
-                            totSucc = totSucc.union(successeur);
-                        }
-                    }
+        for (int i = 0; i < matAdj.length; i++) {
+            for (int j = 0; j < matAdj.length; j++) {
+                for (int k = 0; k < matAdj.length; k++) {
+                    if (matAdj[i][j] && matAdj[j][k] && !matAdj[i][k]) return false;
                 }
             }
-
-            if (tabSucc[i] != null) {
-                if (!tabSucc[i].estEgal(totSucc)) return false;
-            }
-
         }
         return true;
-
     }
 
     //______________________________________________
@@ -633,18 +617,13 @@ public class RelationBinaire {
      */
     public RelationBinaire hasse() { // a revoir
         RelationBinaire r = new RelationBinaire(this.n);
-        for (int i = 0; i < r.matAdj.length; i++) {
-            for (int j = 0; j < r.matAdj.length; j++) {
-                if (this.matAdj[i][j] == true) { // si il y a une relation entre i et j
-                    for (int k = 0; k < r.matAdj.length; k++) {
-                        if (this.matAdj[j][k] && this.matAdj[i][k]) { // si il y a une relation entre j et k et que cette relation existe déjà par transitivité
-                            r.matAdj[i][k] = true; // alors il y a une relation entre i et k (on garde uniquement celle ci)
-                        }
-                    }
+        for (int i = 0; i < this.m; i++) { // premiere boucle sur A
+            for(int j = 0; i<this.m; i++) { // seconde boucle sur A
+                if(this.tabSucc[j].contient(i)){ // Si le fils (A -> B) d'un fils de A (B -> C) contient (A -> C) alors on supprime A -> C
+                    r.tabSucc[i].retraitElt(this.tabSucc[i].contientPratique(j));
                 }
             }
         }
-        return r.sansBoucles();
     }
 
     //______________________________________________
