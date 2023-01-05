@@ -4,12 +4,12 @@
 
 - Version de base SAUF Hasse (regarder si elles sont toutes optimisées comme demander)
 - Extention 1
-- Extention 2 -> avecBoucleBis, sansBoucleBis, unionBis, intersectionBis, complementaireBis, differenceBis, estIncluseBis
+- Extention 2 -> avecBoucleBis, sansBoucleBis, unionBis, intersectionBis, complementaireBis, differenceBis, estIncluseBis, estEgaleBis
 
 # Ce qui reste à faire
 
 - Hasse pour la version base
-- Extention 2 -> estEgaleBis, succBis, predBis, estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, 
+- Extention 2 -> succBis, predBis, estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, 
 estAntisymetriqueBis, estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, afficheDiversBis, descendantBis
 - Extention 3
 - Extention 4

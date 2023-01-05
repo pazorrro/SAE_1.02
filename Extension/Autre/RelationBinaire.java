@@ -501,14 +501,11 @@ public class RelationBinaire {
         return true;
     }
 
-    public boolean estIncluseBis(RelationBinaire r){
+    public boolean estIncluseBis(RelationBinaire r) {
         RelationBinaire r1 = new RelationBinaire(opBool(this.matAdj, r.matAdj, 2));
-
         RelationBinaire r2 = new RelationBinaire(opBool(r1.matAdj, r1.matAdj, 3));
         r2 = new RelationBinaire(opBool(r1.matAdj, r2.matAdj, 2));
-        return(r2.estVide());
-
-
+        return (r2.estVide());
     }
 
     //______________________________________________
@@ -523,6 +520,10 @@ public class RelationBinaire {
             if (!tabSucc[i].estEgal(r.tabSucc[i])) return false;
         }
         return true;
+    }
+    public boolean estEgaleBis(RelationBinaire r){
+        RelationBinaire r1 = new RelationBinaire(opBool(r.matAdj, r.matAdj, 3));
+        return new RelationBinaire(opBool(this.matAdj, r1.matAdj, 2)).estVide();
     }
 
     //______________________________________________
@@ -848,8 +849,8 @@ public class RelationBinaire {
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r2.estIncluse(r1));
-        System.out.println(r2.estIncluseBis(r1));
+        System.out.println(r2.estEgale(r2));
+        System.out.println(r2.estEgaleBis(r2));
         // est ce que r2 est incluse dans r1 ?
 
 
