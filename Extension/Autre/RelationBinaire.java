@@ -625,6 +625,17 @@ public class RelationBinaire {
     }
 
 
+    public boolean estSymetriqueBis() {
+        RelationBinaire r = new RelationBinaire(n, false);
+        RelationBinaire r1 = r.union(this);
+        RelationBinaire r2 = new RelationBinaire(opBool(r.matAdj, r.matAdj, 3));
+        r2 = r2.union(this);
+        r2 = r2.union(new RelationBinaire(n,true));
+        r2 = new RelationBinaire(transposee(r2.matAdj));
+        return r1.estEgale(r2);
+    }
+
+
 
 //______________________________________________
 
@@ -852,7 +863,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, false, false}, {false, false, true, false}, {false, false, false, true,}, {false, false, false, false}};
+        boolean[][] m1 = {{true, true, false, false}, {true, false, true, false}, {false, false, false, false,}, {false, false, false, false}};
         //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
@@ -860,7 +871,8 @@ public class RelationBinaire {
 
 
         System.out.println(r1.toString());
-        System.out.println(r1.descendant(0));
+        System.out.println(r1.estSymetrique());
+        System.out.println(r1.estSymetriqueBis());
         //System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
