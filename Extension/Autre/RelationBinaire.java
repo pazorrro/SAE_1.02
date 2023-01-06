@@ -809,7 +809,16 @@ public class RelationBinaire {
     // EXTENTION DESCENDANT
     public EE descendant(int x) {
         EE total = new EE(n);
+        EE todo = succ(x);
 
+        while (!todo.estVide()){
+            int a = todo.retraitEltAleatoirement();
+            total.ajoutPratique(a);
+            EE nouv_succ = succ(a).difference(total.union(todo));
+            todo=todo.union(nouv_succ);
+        }
+
+    return total;
     }
 
     public static void main(String[] args) {
@@ -843,14 +852,15 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, true, true,}, {true, false, false, false}};
-        boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
+        boolean[][] m1 = {{false, true, false, false}, {false, false, true, false}, {false, false, false, true,}, {false, false, false, false}};
+        //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
-        RelationBinaire r2 = new RelationBinaire(m2);
+        //RelationBinaire r2 = new RelationBinaire(m2);
 
 
         System.out.println(r1.toString());
+        System.out.println(r1.descendant(0));
         //System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
@@ -858,7 +868,7 @@ public class RelationBinaire {
 //        System.out.println(r1.intersectionBis(r3).toString());
 //        System.out.println(r1.estAntireflexive());
 //        System.out.println(r1.estAntireflexiveBis());
-        System.out.println(r1.descendant(3).toString());
+
         //System.out.println(r2.estEgaleBis(r2));
         // est ce que r2 est incluse dans r1 ?
 
