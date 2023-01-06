@@ -11,6 +11,7 @@ public class RelationBinaire {
     private EE[] tabSucc;    // tableau des ensembles de successeurs
 
 
+
     // constructeurs
 
     /**
@@ -22,6 +23,10 @@ public class RelationBinaire {
         this.matAdj = new boolean[nb][nb]; // Nous partons du principe que la matrice est de taille maximale (n*n);
         this.m = 0;
         this.tabSucc = new EE[nb]; // de même, nous partons du principe que le tableau a au maximum n successeurs
+        for (int i = 0; i < nb; i++) {
+            EE ee = new EE(nb);
+            tabSucc[i] = ee;
+        }
     }
 
     //______________________________________________

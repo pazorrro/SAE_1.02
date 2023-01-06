@@ -20,6 +20,10 @@ public class RelationBinaire {
         this.matAdj = new boolean[nb][nb]; // Nous partons du principe que la matrice est de taille maximale (n*n);
         this.m = 0;
         this.tabSucc = new EE[nb]; // de même, nous partons du principe que le tableau a au maximum n successeurs
+        for (int i = 0; i < nb; i++) {
+            EE ee = new EE(nb);
+            tabSucc[i] = ee;
+        }
     }
 
     //______________________________________________
@@ -620,6 +624,8 @@ public class RelationBinaire {
         return true;
     }
 
+
+
 //______________________________________________
 
 
@@ -802,22 +808,8 @@ public class RelationBinaire {
 
     // EXTENTION DESCENDANT
     public EE descendant(int x) {
-        EE totSucc = new EE(n);
-        if (tabSucc[n] != null) {
-            totSucc = totSucc.union(tabSucc[n]);
-            for (int j = 0; j < totSucc.getCardinal(); j++) {
-                if (j < totSucc.getCardinal()) {
-                    for (int k = 0; k < n; k++) {
-                        EE successeur = new EE(tabSucc[k].getCardinal());
-                        if (totSucc.contient(k)) {
-                            successeur = succ(k);
-                        }
-                        totSucc = totSucc.union(successeur);
-                    }
-                }
-            }
-        }
-        return totSucc;
+        EE total = new EE(n);
+
     }
 
     public static void main(String[] args) {
@@ -851,7 +843,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {true, false, false, false}};
+        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, true, true,}, {true, false, false, false}};
         boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
@@ -864,8 +856,9 @@ public class RelationBinaire {
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r1.estAntireflexive());
-        System.out.println(r1.estAntireflexiveBis());
+//        System.out.println(r1.estAntireflexive());
+//        System.out.println(r1.estAntireflexiveBis());
+        System.out.println(r1.descendant(3).toString());
         //System.out.println(r2.estEgaleBis(r2));
         // est ce que r2 est incluse dans r1 ?
 
