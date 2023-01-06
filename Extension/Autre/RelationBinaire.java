@@ -598,6 +598,12 @@ public class RelationBinaire {
         return true;
     }
 
+    public boolean estAntireflexiveBis() {
+        RelationBinaire r = new RelationBinaire(opBool(this.matAdj, this.matAdj, 3));
+        RelationBinaire r1 = new RelationBinaire(this.n, true);
+        return r1.estIncluse(r);
+    }
+
 //______________________________________________
 
 
@@ -845,7 +851,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{true, true, true, true}, {false, true, true, true}, {false, false, true, true,}, {true, false, false, true}};
+        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {true, false, false, false}};
         boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
@@ -858,8 +864,8 @@ public class RelationBinaire {
 
 //        System.out.println(r1.intersection(r3).toString());
 //        System.out.println(r1.intersectionBis(r3).toString());
-        System.out.println(r1.estReflexive());
-        System.out.println(r1.estReflexiveBis());
+        System.out.println(r1.estAntireflexive());
+        System.out.println(r1.estAntireflexiveBis());
         //System.out.println(r2.estEgaleBis(r2));
         // est ce que r2 est incluse dans r1 ?
 
