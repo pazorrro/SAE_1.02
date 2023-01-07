@@ -109,9 +109,9 @@ public class RelationBinaire {
     public RelationBinaire(boolean[][] mat) { // plus efficace avec le constructeur de EE(EE)
         this(mat.length);
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < this.n; i++) {
             this.tabSucc[i] = new EE(n);
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < this.n; j++) {
                 if (mat[i][j] == true) {
                     this.matAdj[i][j] = true;
                     this.m++;
@@ -621,15 +621,22 @@ public class RelationBinaire {
      * résultat : la relation binaire associée au diagramme de Hasse de this
      */
     public RelationBinaire hasse() { // a revoir
-        RelationBinaire r = new RelationBinaire(this.n);
-        for (int i = 0; i < this.m; i++) { // premiere boucle sur A
-            for (int j = 0; i < this.m; i++) { // seconde boucle sur A
-                if (this.tabSucc[j].contient(i)) { // Si le fils (A -> B) d'un fils de A (B -> C) contient (A -> C) alors on supprime A -> C
-                   // r.tabSucc[i].retraitElt(this.tabSucc[i].contientPratique(j));
+        RelationBinaire r = new RelationBinaire(this); // crée une relation entièrement positive
+
+        for(int i = 0; i<this.matAdj.length; i++) {r.matAdj[i][i] = false;} // retire les boucles (préalable nécessaire)
+
+        for (int i = 0; i < this.m; i++) { // tous les constituants de this
+            for(int j = 0; j<this.m; j++){ // recherche des successeurs de i
+                if(this.tabSucc[i].contient(j)){ // si j est un successeur de i
+                    for(int k = 0; k<this.m; k++){ // recherche des successeurs de j
+                        if(this.tabSucc[j].contient(k) && this.tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
+                            r.matAdj[i][k] = false; // retire les éléments voulus de la relation
+                        }
+                    }
                 }
             }
         }
-        return r;
+        return new RelationBinaire(r.matAdj);
     }
 
     //______________________________________________
@@ -753,53 +760,14 @@ public class RelationBinaire {
         while (nb <= 0);
         */
 
+        System.out.println("Say Hey !");
+        boolean[][] toR = {{false, true, true}, {false, false, false}, {false, true, false}};
 
-        boolean[][] m1 = {{false, true, true, true}, {false, false, true, true}, {false, false, false, true,}, {false, false, false, false}};
-        boolean[][] m2 = {{false, true, false, true}, {false, false, true, true}, {false, false, false, true,}, {true, true, false, false}};
+        RelationBinaire r1 = new RelationBinaire(toR);
+        System.out.println("R1:" + r1.toString());
+        System.out.println("R1.hasse():" + r1.hasse().toString());
+//      RelationBinaire r3 = new RelationBinaire(m2);
 
-        RelationBinaire r1 = new RelationBinaire(m1);
-        RelationBinaire r3 = new RelationBinaire(m2);
-
-        System.out.println(r1.toString());
-        System.out.println(r3.toString());
-        System.out.println(r1.intersection(r3).toString());
-
-//        System.out.println(r1.estTransitive());
-//        System.out.println(r1.toString());
-//        System.out.println(r3.estTransitive());
-//        System.out.println(r3.toString());
-//        RelationBinaire fertrans = r3.ferTrans();
-//        System.out.println(fertrans.toString());
-//        System.out.println(fertrans.estTransitive());
-
-
-//        System.out.println("R1 = " + r1.toString());
-//        System.out.println("\n\n");
-//        System.out.println("R3 = " + r3.toString());
-//        System.out.println("\n\n");
-//        RelationBinaire r4 = new RelationBinaire(r1.difference(r3));
-//        System.out.println("R4 = " + r4.toString());
-
-//        RelationBinaire r = new RelationBinaire(4, 1);                                                                                                            // préparation à une session de tests
-//        System.out.println(r);
-        /* 
-        System.out.println("R est vide : " + r.estVide() + ", R est pleine : " + r.estPleine());                                                                        // test de la méthode estVide() et estPleine()
-        System.out.println("3:0 appartient à R : " + r.appartient(3, 0));                                                                                          // test de la méthode appartient()
-        r.ajouteCouple(3, 3);
-        System.out.println(r);                                                                                                                                          // test de la méthode ajouteCouple()
-        r.enleveCouple(3, 3);
-        System.out.println(r);                                                                                                                                          // test de la méthode enleveCouple()
-        System.out.println("Fonction avec boucle de r : " + r.avecBoucles() + ",\n Fonction sans boucle de r : " + r.avecBoucles().sansBoucles()); // <== TEST DU TURFU // test de la méthode avecBoucles() et sansBoucles()
-        */
-//        RelationBinaire r1 = new RelationBinaire(4, true); // préparation d'une nouvelle session de tests avec r et r1
-//        System.out.println(r1);
-//        System.out.println("Union de r et r1 : " + r.union(r1).toString());
-//        System.out.println("Intersection de r et r1 : " + r.intersection(r1).toString());
-//
-//        RelationBinaire r = new RelationBinaire(3, 0.5);
-//        System.out.println("R=" + r.toString());
-//        System.out.println("R après passage au diagramme de hasse :" + r.hasse().toString());
-// test
     }
 
 
