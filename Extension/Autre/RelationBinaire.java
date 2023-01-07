@@ -648,7 +648,9 @@ public class RelationBinaire {
     }
 
     public boolean estAntisymetriqueBis() {
-        return !this.estSymetriqueBis();
+        RelationBinaire r = new RelationBinaire(opBool(this.matAdj, new RelationBinaire(transposee(this.matAdj)).matAdj, 2));
+        RelationBinaire r1 = r.difference(new RelationBinaire(n, true));
+        return r1.estVide();
     }
 
 //______________________________________________
@@ -906,7 +908,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{true, true, false, false}, {false, false, false, false}, {false, false, true, false,}, {false, false, false, false}};
+        boolean[][] m1 = {{false, true, false, false}, {true, false, false, false}, {false, false, false, false,}, {false, false, false, false}};
         //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
