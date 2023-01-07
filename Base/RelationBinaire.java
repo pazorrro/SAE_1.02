@@ -625,11 +625,11 @@ public class RelationBinaire {
 
         for(int i = 0; i<this.matAdj.length; i++) {r.matAdj[i][i] = false;} // retire les boucles (préalable nécessaire)
 
-        for (int i = 0; i < this.m; i++) { // tous les constituants de this
-            for(int j = 0; j<this.m; j++){ // recherche des successeurs de i
-                if(this.tabSucc[i].contient(j)){ // si j est un successeur de i
+        for (int i = 0; i < this.n; i++) { // tous les constituants de this
+            for(int j = 0; j<this.n; j++){ // recherche des successeurs de i
+                if(this.sansBoucles().tabSucc[i].contient(j)){ // si j est un successeur de i
                     for(int k = 0; k<this.m; k++){ // recherche des successeurs de j
-                        if(this.tabSucc[j].contient(k) && this.tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
+                        if(this.sansBoucles().tabSucc[j].contient(k) && this.sansBoucles().tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
                             r.matAdj[i][k] = false; // retire les éléments voulus de la relation
                         }
                     }
@@ -760,8 +760,7 @@ public class RelationBinaire {
         while (nb <= 0);
         */
 
-        System.out.println("Say Hey !");
-        boolean[][] toR = {{false, true, true}, {false, false, false}, {false, true, false}};
+        boolean[][] toR = {{true, true, true}, {false, true, false}, {false, true, true}};
 
         RelationBinaire r1 = new RelationBinaire(toR);
         System.out.println("R1:" + r1.toString());
