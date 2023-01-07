@@ -910,11 +910,10 @@ public class RelationBinaire {
         for (int i = 0; i < 4; i++) {
             System.out.println("Relation binaire " + i + " : ");
             System.out.println(ens[i].toString());
-            if (!ens[i].ferTrans().estEgale(ens[i])){
+            if (!ens[i].ferTrans().estEgale(ens[i])) {
                 System.out.println("Oupss");
-                verif= false;
-            }
-            else System.out.println("Verifiée ! \n\n\n---\n\n");
+                verif = false;
+            } else System.out.println("Verifiée ! \n\n\n---\n\n");
         }
         if (verif) System.out.println("Toutes les vérificatinos sont ok.");
         else System.out.println("Toutes les vérifications ne sont pas ok.");

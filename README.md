@@ -10,7 +10,7 @@ succBis (rien à faire si?),
 estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
 - estAntisymetriqueBis,
 - extention 3 (presque finie)
-- Extention 4
+- Extention 4 
 
 # Ce qui reste à faire
 
