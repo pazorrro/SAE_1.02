@@ -305,7 +305,10 @@ public class RelationBinaire {
      * résultat : vrai ssi this est vide
      */
     public boolean estVide() {
-        return this.m == 0;
+        for (int i = 0; i < tabSucc.length; i++) {
+            if(tabSucc[i].getCardinal()!=0) return false;
+        }
+        return true;
     }
 
 //______________________________________________
@@ -648,9 +651,10 @@ public class RelationBinaire {
     }
 
     public boolean estAntisymetriqueBis() {
-        RelationBinaire r = new RelationBinaire(opBool(this.matAdj, new RelationBinaire(transposee(this.matAdj)).matAdj, 2));
-        RelationBinaire r1 = r.difference(new RelationBinaire(n, true));
-        return r1.estVide();
+        RelationBinaire r = new RelationBinaire(transposee(this.matAdj));
+        RelationBinaire r1 = new RelationBinaire(opBool(this.matAdj, r.matAdj, 2));
+        RelationBinaire r2 = r1.difference(new RelationBinaire(n, true));
+        return r2.estVide();
     }
 
 //______________________________________________
@@ -908,7 +912,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{false, true, false, false}, {true, false, false, false}, {false, false, false, false,}, {false, false, false, false}};
+        boolean[][] m1 = {{true, true, false, true}, {false, true, false, true}, {false, false, true, false,}, {false, true, false, false}};
         //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);

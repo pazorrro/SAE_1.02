@@ -7,15 +7,15 @@
 - Extention 2 -> avecBoucleBis, sansBoucleBis, unionBis, intersectionBis,
 complementaireBis, differenceBis, estIncluseBis, estEgaleBis, 
 succBis (rien à faire si?),
-estReflexiveBis, estAntireflexiveBis, estSymetriqueBis,
+estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
+- estAntisymetriqueBis,
 - extention 3 (presque finie)
 
 # Ce qui reste à faire
 
 - Hasse pour la version base
-- Extention 2 ->  predBis,   estAntisymetriqueBis, 
-estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, 
-afficheDiversBis, descendantBis
+- Extention 2 ->  predBis,   
+estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, descendantBis
 - Extention 4
 - Extension 5
 - Extension 6
