@@ -626,13 +626,7 @@ public class RelationBinaire {
 
 
     public boolean estSymetriqueBis() {
-        RelationBinaire r = new RelationBinaire(n, false);
-        RelationBinaire r1 = r.union(this);
-        RelationBinaire r2 = new RelationBinaire(opBool(r.matAdj, r.matAdj, 3));
-        r2 = r2.union(this);
-        r2 = r2.union(new RelationBinaire(n,true));
-        r2 = new RelationBinaire(transposee(r2.matAdj));
-        return r1.estEgale(r2);
+        return this.estEgale(new RelationBinaire(transposee(this.matAdj)));
     }
 
 
@@ -647,10 +641,14 @@ public class RelationBinaire {
     public boolean estAntisymetrique() {
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
-                if (matAdj[i][j] == matAdj[j][i]) return false;
+                if (matAdj[i][j] && matAdj[j][i] && i!=j) return false;
             }
         }
         return true;
+    }
+
+    public boolean estAntisymetriqueBis() {
+        return !this.estSymetriqueBis();
     }
 
 //______________________________________________
@@ -661,30 +659,18 @@ public class RelationBinaire {
      * résultat : vrai ssi this est transitive
      */
     public boolean estTransitive() {
-        for (int i = 0; i < tabSucc.length; i++) {
-            EE totSucc = new EE(n);
-            if (tabSucc[i] != null) {
-                totSucc = totSucc.union(tabSucc[i]);
-                for (int j = 0; j < totSucc.getCardinal(); j++) {
-                    if (j < totSucc.getCardinal()) {
-                        for (int k = 0; k < n; k++) {
-                            EE successeur = new EE(tabSucc[k].getCardinal());
-                            if (totSucc.contient(k)) {
-                                successeur = succ(k);
-                            }
-                            totSucc = totSucc.union(successeur);
-                        }
-                    }
+        for (int i = 0; i < matAdj.length; i++) {
+            for (int j = 0; j < matAdj.length; j++) {
+                for (int k = 0; k < matAdj.length; k++) {
+                    if (matAdj[i][j] && matAdj[j][k] && !matAdj[i][k]) return false;
                 }
             }
-
-            if (tabSucc[i] != null) {
-                if (!tabSucc[i].estEgal(totSucc)) return false;
-            }
-
         }
         return true;
+    }
 
+    public boolean estTransitiveBis() {
+        return true;
     }
 
 //______________________________________________
@@ -695,6 +681,10 @@ public class RelationBinaire {
      * résultat : vrai ssi this est une relation d'ordre
      */
     public boolean estRelOrdre() {
+        return this.estReflexive() && this.estAntisymetrique() && this.estTransitive();
+    }
+
+    public boolean estRelOrdreBis() {
         return this.estReflexive() && this.estAntisymetrique() && this.estTransitive();
     }
 
@@ -720,6 +710,11 @@ public class RelationBinaire {
         }
         return r.sansBoucles();
     }
+
+    public RelationBinaire hasseBis() {
+        return this;
+    }
+
 
 //______________________________________________
 
@@ -810,6 +805,54 @@ public class RelationBinaire {
         // manque les hass
     }
 
+    public void afficheDiversBis() {
+
+        System.out.println(this.toString());
+
+        int compteur = 0;
+
+        String propriete = "";
+
+        if (this.estReflexiveBis() == true) {
+            propriete += "- réflexive\n";
+            compteur++;
+        }
+
+        if (this.estAntireflexiveBis() == true) {
+            propriete += "- antiréflexive\n";
+            compteur++;
+        }
+
+        if (this.estSymetriqueBis() == true) {
+            propriete += "- symétrique\n";
+            compteur++;
+        }
+
+        if (this.estAntisymetriqueBis() == true) {
+            propriete += "- antisymétrique\n";
+            compteur++;
+        }
+
+        if (this.estTransitiveBis() == true) {
+            propriete += "- transitive\n";
+            compteur++;
+        }
+
+        if (this.estRelOrdreBis() == true) {
+            propriete += "- relation d'ordre\n";
+            compteur++;
+        }
+
+
+        if (compteur == 0) System.out.println("Cette relation n'as aucune propriété.");
+        else {
+            System.out.println("\n\nCette relation a  " + compteur + " propriétés :\n");
+            System.out.println(propriete);
+        }
+
+        // manque les hass
+    }
+
 //______________________________________________
 
 /////////////////////////////////
@@ -863,7 +906,7 @@ public class RelationBinaire {
         */
 
 
-        boolean[][] m1 = {{true, true, false, false}, {true, false, true, false}, {false, false, false, false,}, {false, false, false, false}};
+        boolean[][] m1 = {{true, true, false, false}, {false, false, false, false}, {false, false, true, false,}, {false, false, false, false}};
         //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
 
         RelationBinaire r1 = new RelationBinaire(m1);
@@ -871,8 +914,8 @@ public class RelationBinaire {
 
 
         System.out.println(r1.toString());
-        System.out.println(r1.estSymetrique());
-        System.out.println(r1.estSymetriqueBis());
+        System.out.println(r1.estAntisymetrique());
+        System.out.println(r1.estAntisymetriqueBis());
         //System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
