@@ -10,13 +10,14 @@ succBis (rien à faire si?),
 estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
 - estAntisymetriqueBis,
 - extention 3 (presque finie)
+- Extention 4
 
 # Ce qui reste à faire
 
 - Hasse pour la version base
 - Extention 2 ->  predBis,   
 estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, descendantBis
-- Extention 4
+
 - Extension 5
 - Extension 6
 - Extension 7

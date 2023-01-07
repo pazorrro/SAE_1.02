@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class RelationBinaire {
 
     // attributs
@@ -306,7 +308,7 @@ public class RelationBinaire {
      */
     public boolean estVide() {
         for (int i = 0; i < tabSucc.length; i++) {
-            if(tabSucc[i].getCardinal()!=0) return false;
+            if (tabSucc[i].getCardinal() != 0) return false;
         }
         return true;
     }
@@ -633,7 +635,6 @@ public class RelationBinaire {
     }
 
 
-
 //______________________________________________
 
 
@@ -644,7 +645,7 @@ public class RelationBinaire {
     public boolean estAntisymetrique() {
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
-                if (matAdj[i][j] && matAdj[j][i] && i!=j) return false;
+                if (matAdj[i][j] && matAdj[j][i] && i != j) return false;
             }
         }
         return true;
@@ -865,21 +866,92 @@ public class RelationBinaire {
 // Toutes les autres extensions//
 /////////////////////////////////
 
+    //
+    // EXTENTION 1 - DESCENDANT
+    //
 
-    // EXTENTION DESCENDANT
     public EE descendant(int x) {
         EE total = new EE(n);
         EE todo = succ(x);
 
-        while (!todo.estVide()){
+        while (!todo.estVide()) {
             int a = todo.retraitEltAleatoirement();
             total.ajoutPratique(a);
             EE nouv_succ = succ(a).difference(total.union(todo));
-            todo=todo.union(nouv_succ);
+            todo = todo.union(nouv_succ);
         }
-
-    return total;
+        return total;
     }
+
+
+    //
+    // EXTENTION 4 - C.N. d'une relation d'ordre
+    //
+
+    // faire 4 relation d'odre
+
+
+    public static void verifier_avec_quatre() {
+
+        boolean[][] m1 = {{true, true}, {false, true}};
+        boolean[][] m2 = {{true, false, true}, {true, true, true}, {false, false, true}};
+
+        boolean[][] m3 = {{true, false, true, false}, {false, true, true, true}, {false, false, true, false,}, {false, false, false, true}};
+        boolean[][] m4 = {{true, false, false, false}, {true, true, true, true}, {true, false, true, true,}, {true, false, false, true}};
+
+        RelationBinaire r1 = new RelationBinaire(m1);
+        RelationBinaire r2 = new RelationBinaire(m2);
+        RelationBinaire r3 = new RelationBinaire(m3);
+        RelationBinaire r4 = new RelationBinaire(m4);
+
+        RelationBinaire[] ens = {r1, r2, r3, r4};
+
+        boolean verif = true;
+        for (int i = 0; i < 4; i++) {
+            System.out.println("Relation binaire " + i + " : ");
+            System.out.println(ens[i].toString());
+            if (!ens[i].ferTrans().estEgale(ens[i])){
+                System.out.println("Oupss");
+                verif= false;
+            }
+            else System.out.println("Verifiée ! \n\n\n---\n\n");
+        }
+        if (verif) System.out.println("Toutes les vérificatinos sont ok.");
+        else System.out.println("Toutes les vérifications ne sont pas ok.");
+    }
+
+
+    public static boolean booleanverifCNordre(int intnbRel, int intcardMax) {
+        boolean prouve = true;
+        for (int i = 0; i < intnbRel; i++) {
+            int a = Ut.randomMinMax(2, 9);
+            double b = a;
+            double proba = 1.0 / b;
+            System.out.println("Recherche de matrice relation d'odre en cours...");
+            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, intcardMax), proba);
+            while (!r.estRelOrdre()) {
+                a = Ut.randomMinMax(2, 9);
+                b = a;
+                proba = 1.0 / b;
+                r = new RelationBinaire(Ut.randomMinMax(2, intcardMax), proba);
+            }
+            r.union(r.avecBoucles());
+            r.afficheDivers();
+            if (!r.ferTrans().estEgale(r)) prouve = false;
+        }
+        return prouve;
+    }
+
+
+    //
+    // EXTENTION 5 - Fermeture ordonnée
+    //
+
+
+    //
+    // EXTENTION 6 - niveaux
+    //
+
 
     public static void main(String[] args) {
 
@@ -910,18 +982,20 @@ public class RelationBinaire {
         }
         while (nb <= 0);
         */
+        verifier_avec_quatre();
+//        System.out.println(booleanverifCNordre(100, 10));
 
 
-        boolean[][] m1 = {{true, true, false, true}, {false, true, false, true}, {false, false, true, false,}, {false, true, false, false}};
-        //boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
-
-        RelationBinaire r1 = new RelationBinaire(m1);
-        //RelationBinaire r2 = new RelationBinaire(m2);
-
-
-        System.out.println(r1.toString());
-        System.out.println(r1.estAntisymetrique());
-        System.out.println(r1.estAntisymetriqueBis());
+//        boolean[][] m1 = {{true, true, false, true}, {false, true, false, true}, {false, false, true, false,}, {false, true, false, false}};
+////        boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
+////
+//        RelationBinaire r1 = new RelationBinaire(m1);
+////        //RelationBinaire r2 = new RelationBinaire(m2);
+//
+//
+//        System.out.println(r1.toString());
+//        System.out.println(r1.estAntisymetrique());
+//        System.out.println(r1.estAntisymetriqueBis());
         //System.out.println(r2.toString());
 //        System.out.println(r3.toString());
 
