@@ -702,20 +702,23 @@ public class RelationBinaire {
      * pré-requis : aucun
      * résultat : la relation binaire associée au diagramme de Hasse de this
      */
-    public RelationBinaire hasse() { // a revoir
-        RelationBinaire r = new RelationBinaire(this.n);
-        for (int i = 0; i < r.matAdj.length; i++) {
-            for (int j = 0; j < r.matAdj.length; j++) {
-                if (this.matAdj[i][j] == true) { // si il y a une relation entre i et j
-                    for (int k = 0; k < r.matAdj.length; k++) {
-                        if (this.matAdj[j][k] && this.matAdj[i][k]) { // si il y a une relation entre j et k et que cette relation existe déjà par transitivité
-                            r.matAdj[i][k] = true; // alors il y a une relation entre i et k (on garde uniquement celle ci)
+    public RelationBinaire hasse() { 
+        RelationBinaire r = new RelationBinaire(this); // crée une relation entièrement positive
+
+        for(int i = 0; i<this.matAdj.length; i++) {r.matAdj[i][i] = false;} // retire les boucles (préalable nécessaire)
+
+        for (int i = 0; i < this.n; i++) { // tous les constituants de this
+            for(int j = 0; j<this.n; j++){ // recherche des successeurs de i
+                if(this.sansBoucles().tabSucc[i].contient(j)){ // si j est un successeur de i
+                    for(int k = 0; k<this.m; k++){ // recherche des successeurs de j
+                        if(this.sansBoucles().tabSucc[j].contient(k) && this.sansBoucles().tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
+                            r.matAdj[i][k] = false; // retire les éléments voulus de la relation
                         }
                     }
                 }
             }
         }
-        return r.sansBoucles();
+        return new RelationBinaire(r.matAdj);
     }
 
     public RelationBinaire hasseBis() {

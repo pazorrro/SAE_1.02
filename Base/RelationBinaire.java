@@ -760,7 +760,7 @@ public class RelationBinaire {
         while (nb <= 0);
         */
 
-        boolean[][] toR = {{true, true, true}, {false, true, false}, {false, true, true}};
+        boolean[][] toR = {{true, true, true, true, true}, {false, true, true, true, true}, {false, false, true, true, false}, {false, false, false, true, false}, {false, false, false, false, true}};
 
         RelationBinaire r1 = new RelationBinaire(toR);
         System.out.println("R1:" + r1.toString());
