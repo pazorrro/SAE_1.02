@@ -1,3 +1,4 @@
+import java.lang.ref.Cleaner;
 import java.util.Random;
 
 public class RelationBinaire {
@@ -923,19 +924,13 @@ public class RelationBinaire {
     }
 
 
-    public static boolean booleanverifCNordre(int intnbRel, int intcardMax) {
+    public static boolean verifCNordre(int nbRel, int cardMax) {
         boolean prouve = true;
-        for (int i = 0; i < intnbRel; i++) {
-            int a = Ut.randomMinMax(2, 9);
-            double b = a;
-            double proba = 1.0 / b;
+        for (int i = 0; i < nbRel; i++) {
             System.out.println("Recherche de matrice relation d'odre en cours...");
-            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, intcardMax), proba);
+            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(0, 100)/100));
             while (!r.estRelOrdre()) {
-                a = Ut.randomMinMax(2, 9);
-                b = a;
-                proba = 1.0 / b;
-                r = new RelationBinaire(Ut.randomMinMax(2, intcardMax), proba);
+                r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(0, 100)/100));
             }
             r.union(r.avecBoucles());
             r.afficheDivers();
@@ -949,6 +944,44 @@ public class RelationBinaire {
     // EXTENTION 5 - Fermeture ordonnée
     //
 
+    private boolean CSNOrdo(){
+        return this.ferTrans().estAntisymetrique() && !this.estVide(); // vérifier si la fermeture transitive n'enlèvera pas le caractère antisymétrique de la relation
+    }
+
+    public static boolean verifCNSferOrdo(int nbRel, int cardMax){
+        for(int i = 0; i<5; i++){
+            // Si la relation obtenue après ferOrdonnee est vide
+            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(1, 100)/100.0));
+            boolean prevCNS = r.CSNOrdo();
+            System.out.println(r + "\nEst-elle ordonnable ? " + prevCNS);
+            if (r.ferOrdonnee().estVide() == prevCNS) return false; // Si c'est vide alors qu'on a dit le contraire
+            System.out.println("Effectivement, ça a marché !");
+        }
+        return true;
+    }
+
+    public void makeItReflexif(RelationBinaire r){
+        r = r.avecBoucles();
+    }
+
+    public void makeItTransitif(RelationBinaire r){
+        r.union(r.ferTrans());
+    }
+
+    public RelationBinaire ferOrdonnee(){ // renvoie une relation binaire si elle est ordonnée, sinon renvoie une relation binaire vide
+        RelationBinaire r = new RelationBinaire(this);
+        makeItReflexif(r);
+        makeItTransitif(r);
+        // Si on fait une fonction "MakeItAntisymétrique", ça demandera de réduire R, et du coup ce sera pas bon car 
+        // la fermeture Ordonnée doit contenir R
+        if(r.estAntisymetrique()){ // Donc si elle est antisymétrique, alors on y est parvenu (à savoir que makeItTransitif 
+                                   // peut possiblement la rendre non-antisymétrique)
+            return r;
+        }
+        else { // et là c'est le cas où on peut rien faire sans réduire R
+            return new RelationBinaire(0, 0.0);
+        }
+    }
 
     //
     // EXTENTION 6 - niveaux
@@ -957,94 +990,10 @@ public class RelationBinaire {
 
     public static void main(String[] args) {
 
-
-//        int[] a = {0, 2};
-//        EE at = new EE(a, 3);
-//
-//        int[] b = {0, 2};
-//        EE bt = new EE(b, 3);
-//
-//        int[] c = {0, 1, 2};
-//        EE ct = new EE(c, 3);
-//
-//        EE[] abc = {at, bt, ct};
-//        RelationBinaire x = new RelationBinaire(abc);
-//
-//
-//        RelationBinaire y = new RelationBinaire(x);
-//
-//        System.out.println(x.toString());
-//        System.out.println(y.toString());
-        /*
-        int nb;
-        double p;
-        do {
-            Ut.afficher("\nDonner le cardinal de E (>0) : "); // <== C'était là de base
-            nb = Ut.saisirEntier();
+        boolean test = verifCNSferOrdo(1000, 4);
+        while (test != false){
+            test = verifCNSferOrdo(1, 4);
         }
-        while (nb <= 0);
-        */
-        verifier_avec_quatre();
-//        System.out.println(booleanverifCNordre(100, 10));
-
-
-//        boolean[][] m1 = {{true, true, false, true}, {false, true, false, true}, {false, false, true, false,}, {false, true, false, false}};
-////        boolean[][] m2 = {{false, true, false, true}, {false, false, true, false}, {false, false, true, false,}, {false, false, false, false}};
-////
-//        RelationBinaire r1 = new RelationBinaire(m1);
-////        //RelationBinaire r2 = new RelationBinaire(m2);
-//
-//
-//        System.out.println(r1.toString());
-//        System.out.println(r1.estAntisymetrique());
-//        System.out.println(r1.estAntisymetriqueBis());
-        //System.out.println(r2.toString());
-//        System.out.println(r3.toString());
-
-//        System.out.println(r1.intersection(r3).toString());
-//        System.out.println(r1.intersectionBis(r3).toString());
-//        System.out.println(r1.estAntireflexive());
-//        System.out.println(r1.estAntireflexiveBis());
-
-        //System.out.println(r2.estEgaleBis(r2));
-        // est ce que r2 est incluse dans r1 ?
-
-
-//        System.out.println(r1.estTransitive());
-
-//        System.out.println(r3.estTransitive());
-
-//        RelationBinaire fertrans = r3.ferTrans();
-//        System.out.println(fertrans.toString());
-//        System.out.println(fertrans.estTransitive());
-
-
-//        System.out.println("R1 = " + r1.toString());
-//        System.out.println("\n\n");
-//        System.out.println("R3 = " + r3.toString());
-//        System.out.println("\n\n");
-//        RelationBinaire r4 = new RelationBinaire(r1.difference(r3));
-//        System.out.println("R4 = " + r4.toString());
-
-//        RelationBinaire r = new RelationBinaire(4, 1);                                                                                                            // préparation à une session de tests
-//        System.out.println(r);
-        /* 
-        System.out.println("R est vide : " + r.estVide() + ", R est pleine : " + r.estPleine());                                                                        // test de la méthode estVide() et estPleine()
-        System.out.println("3:0 appartient à R : " + r.appartient(3, 0));                                                                                          // test de la méthode appartient()
-        r.ajouteCouple(3, 3);
-        System.out.println(r);                                                                                                                                          // test de la méthode ajouteCouple()
-        r.enleveCouple(3, 3);
-        System.out.println(r);                                                                                                                                          // test de la méthode enleveCouple()
-        System.out.println("Fonction avec boucle de r : " + r.avecBoucles() + ",\n Fonction sans boucle de r : " + r.avecBoucles().sansBoucles()); // <== TEST DU TURFU // test de la méthode avecBoucles() et sansBoucles()
-        */
-//        RelationBinaire r1 = new RelationBinaire(4, true); // préparation d'une nouvelle session de tests avec r et r1
-//        System.out.println(r1);
-//        System.out.println("Union de r et r1 : " + r.union(r1).toString());
-//        System.out.println("Intersection de r et r1 : " + r.intersection(r1).toString());
-//
-//        RelationBinaire r = new RelationBinaire(3, 0.5);
-//        System.out.println("R=" + r.toString());
-//        System.out.println("R après passage au diagramme de hasse :" + r.hasse().toString());
 
     }
 
