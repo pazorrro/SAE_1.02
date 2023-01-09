@@ -11,6 +11,7 @@ estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
 - estAntisymetriqueBis,
 - extention 3 (presque finie)
 - Extention 4 
+- - Extension 5
 
 # Ce qui reste à faire
 
@@ -18,6 +19,6 @@ estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
 - Extention 2 ->  predBis,   
 estTransitiveBis, estRelOrdreBis, hasseBis, ferTransBis, descendantBis
 
-- Extension 5
+
 - Extension 6
 - Extension 7
