@@ -11,7 +11,7 @@ estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
 - estAntisymetriqueBis,
 - extention 3 (presque finie)
 - Extention 4 
-- - Extension 5
+- Extension 5
 
 # Ce qui reste à faire
 
