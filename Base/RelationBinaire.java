@@ -578,7 +578,7 @@ public class RelationBinaire {
     public boolean estAntisymetrique() {
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
-                if (matAdj[i][j] == matAdj[j][i]) return false;
+                if (i != j && matAdj[i][j] == matAdj[j][i]) return false;
             }
         }
         return true;
