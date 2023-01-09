@@ -310,8 +310,12 @@ public class RelationBinaire {
      * résultat : vrai ssi this est vide
      */
     public boolean estVide() {
-        return this.m == 0;
+        for (int i = 0; i < tabSucc.length; i++) {
+            if (tabSucc[i].getCardinal() != 0) return false;
+        }
+        return true;
     }
+
 
     //______________________________________________
 
@@ -725,40 +729,12 @@ public class RelationBinaire {
             System.out.println(propriete);
         }
 
-        // manque les hass
     }
 
     //______________________________________________
 
     public static void main(String[] args) {
 
-
-//        int[] a = {0, 2};
-//        EE at = new EE(a, 3);
-//
-//        int[] b = {0, 2};
-//        EE bt = new EE(b, 3);
-//
-//        int[] c = {0, 1, 2};
-//        EE ct = new EE(c, 3);
-//
-//        EE[] abc = {at, bt, ct};
-//        RelationBinaire x = new RelationBinaire(abc);
-//
-//
-//        RelationBinaire y = new RelationBinaire(x);
-//
-//        System.out.println(x.toString());
-//        System.out.println(y.toString());
-        /*
-        int nb;
-        double p;
-        do {
-            Ut.afficher("\nDonner le cardinal de E (>0) : "); // <== C'était là de base
-            nb = Ut.saisirEntier();
-        }
-        while (nb <= 0);
-        */
 
         boolean[][] toR = {{true, true, true, true, true}, {false, true, true, true, true}, {false, false, true, true, false}, {false, false, false, true, false}, {false, false, false, false, true}};
 
