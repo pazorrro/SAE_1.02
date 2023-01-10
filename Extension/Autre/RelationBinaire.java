@@ -1,4 +1,3 @@
-import java.lang.ref.Cleaner;
 import java.util.Random;
 
 public class RelationBinaire {
@@ -723,7 +722,15 @@ public class RelationBinaire {
     }
 
     public RelationBinaire hasseBis() {
-        return this;
+        RelationBinaire r = new RelationBinaire(this);
+        r = r.sansBoucles(); 
+        r = r.difference(r.multiplier(r)); // la différence entre r et r²
+        return r;
+    }
+
+    // Multiplie this avec r
+    public RelationBinaire multiplier(RelationBinaire r){
+        return new RelationBinaire(produit(this.matAdj, r.matAdj));
     }
 
 
@@ -989,12 +996,17 @@ public class RelationBinaire {
 
 
     public static void main(String[] args) {
-
+        /*
         boolean test = verifCNSferOrdo(1000, 4);
         while (test != false){
             test = verifCNSferOrdo(1, 4);
         }
+        */ // A regler
+        boolean[][] matrice = {{true, true, true},{false, true, true},{false, false, false}};
+        RelationBinaire r = new RelationBinaire(matrice);
+        System.out.println("R =" + r);
 
+        System.out.println(r.hasseBis());
     }
 
 
