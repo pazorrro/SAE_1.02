@@ -723,8 +723,8 @@ public class RelationBinaire {
 
     public RelationBinaire hasseBis() {
         RelationBinaire r = new RelationBinaire(this);
-        r = r.sansBoucles(); 
-        r = r.difference(r.multiplier(r)); // la différence entre r et r²
+        r = r.sansBoucles().difference(r.sansBoucles().multiplier(r.sansBoucles()));
+        // La différence de r (sans les boucles) avec r²
         return r;
     }
 
@@ -1005,7 +1005,6 @@ public class RelationBinaire {
         boolean[][] matrice = {{true, true, true},{false, true, true},{false, false, false}};
         RelationBinaire r = new RelationBinaire(matrice);
         System.out.println("R =" + r);
-
         System.out.println(r.hasseBis());
     }
 
