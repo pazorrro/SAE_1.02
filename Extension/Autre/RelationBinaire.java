@@ -561,10 +561,6 @@ public class RelationBinaire {
         return new EE(this.tabSucc[x]);
     }
 
-    public EE succBis(int x) {
-        return new EE(this.tabSucc[x]);
-    } // on peut rien modifier si ?
-
 //______________________________________________
 
 
@@ -581,6 +577,12 @@ public class RelationBinaire {
         }
         return e;
     }
+
+    public EE predBis(int x) {
+        // je sais pas
+        return new EE(1);
+    }
+
 
 //______________________________________________
 
@@ -1021,11 +1023,11 @@ public class RelationBinaire {
             test = verifCNSferOrdo(1, 4);
         }
         */ // A regler
-        boolean[][] matrice = {{true, true, true}, {false, true, true}, {true, true, true}};
+        boolean[][] matrice = {{false, false, false}, {false, false, false}, {false, false, false}};
         RelationBinaire r = new RelationBinaire(matrice);
         System.out.println("R =" + r);
-        System.out.println(r.estPleine());
-        System.out.println(r.estPleineBis());
+        System.out.println(r.estVide());
+        System.out.println(r.estVideBis());
     }
 
 
