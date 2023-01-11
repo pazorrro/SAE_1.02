@@ -16,7 +16,7 @@ estAntisymetriqueBis, estTransitiveBis, hasseBis, estRelOrdreBis, predBis
 # Ce qui reste à faire
 
 - Hasse pour la version base
-- Extention 2 ->  ferTransBis, (descendentBis ?)
+- Extention 2 ->  ferTransBis, (descendentBis ?) 
 - descendantBis
 
 
