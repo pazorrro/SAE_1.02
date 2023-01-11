@@ -326,8 +326,8 @@ public class RelationBinaire {
      * résultat : vrai ssi this est pleinee (contient tous les couples d'éléments de E)
      */
     public boolean estPleine() {
-        for (int i = 0; i < tabSucc.length; i++) {
-            if (tabSucc[i].getCardinal() != 1) return false;
+        for (int i = 0; i < n; i++) {
+            if (tabSucc[i].getCardinal() != n) return false;
         }
         return true;
     }
@@ -1021,10 +1021,11 @@ public class RelationBinaire {
             test = verifCNSferOrdo(1, 4);
         }
         */ // A regler
-        boolean[][] matrice = {{true, true, true}, {false, true, true}, {false, false, false}};
+        boolean[][] matrice = {{true, true, true}, {false, true, true}, {true, true, true}};
         RelationBinaire r = new RelationBinaire(matrice);
         System.out.println("R =" + r);
-        System.out.println(r.hasseBis());
+        System.out.println(r.estPleine());
+        System.out.println(r.estPleineBis());
     }
 
 
