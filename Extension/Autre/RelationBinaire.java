@@ -562,8 +562,8 @@ public class RelationBinaire {
      */
     public EE pred(int x) {
         EE e = new EE(this.n);
-        for (int i = 0; i < this.n; i++) {
-            if (this.matAdj[i][x]) {
+        for (int i = 0; i < this.tabSucc.length; i++) {
+            if (tabSucc[i].contient(x)) {
                 e.ajoutElt(i);
             }
         }
@@ -610,7 +610,7 @@ public class RelationBinaire {
     public boolean estAntireflexiveBis() {
         RelationBinaire r = new RelationBinaire(opBool(this.matAdj, this.matAdj, 3));
         RelationBinaire r1 = new RelationBinaire(this.n, true);
-        return r1.estIncluse(r);
+        return r.estIncluse(this);
     }
 
 //______________________________________________
@@ -645,7 +645,7 @@ public class RelationBinaire {
     public boolean estAntisymetrique() {
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
-                if (matAdj[i][j] && matAdj[j][i] && i != j) return false;
+                if (i != j && matAdj[i][j] == matAdj[j][i]) return false;
             }
         }
         return true;
@@ -677,7 +677,9 @@ public class RelationBinaire {
     }
 
     public boolean estTransitiveBis() {
-        return true;
+        RelationBinaire r = new RelationBinaire(this.multiplier(this));
+        if(r.estIncluse(this)) return true;
+        return false;
     }
 
 //______________________________________________

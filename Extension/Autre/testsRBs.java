@@ -327,7 +327,7 @@ public class testsRBs {
         };
 
         RelationBinaire RB = new RelationBinaire(m1);
-        if(RB.estTransitive())
+        if(RB.estTransitiveBis())
             return 1;
         else return 0;
     }

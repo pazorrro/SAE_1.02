@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda55c65-cf90-4cd8-9b04-a95398addc29" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Base/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Base/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Base/testsRBs.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/testsRBs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Extension/Autre/testsRBs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RelationBinaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/RelationBinaire.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Base/RelationBinaire.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Base/RelationBinaire.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Extension/Autre/RelationBinaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Extension/Autre/RelationBinaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Extension/Autre/out/production/Autre/RelationBinaire.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Extension/Autre/out/production/Autre/RelationBinaire.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../out/production/SAE_1.02/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/SAE_1.02/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +44,7 @@
       <workItem from="1673246974291" duration="194000" />
       <workItem from="1673253494545" duration="3000" />
       <workItem from="1673253562177" duration="20000" />
+      <workItem from="1673257008260" duration="68000" />
     </task>
     <servers />
   </component>

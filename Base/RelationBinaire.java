@@ -517,8 +517,8 @@ public class RelationBinaire {
      */
     public EE pred(int x) {
         EE e = new EE(this.n);
-        for (int i = 0; i < this.n; i++) {
-            if (this.matAdj[i][x]) {
+        for (int i = 0; i < this.tabSucc.length; i++) {
+            if (tabSucc[i].contient(x)) {
                 e.ajoutElt(i);
             }
         }
@@ -537,7 +537,7 @@ public class RelationBinaire {
      */
     public boolean estReflexive() {
         for (int i = 0; i < matAdj.length; i++) {
-            if (matAdj[i][i] == false) return false;
+            if (!matAdj[i][i]) return false;
         }
         return true;
     }
@@ -551,7 +551,7 @@ public class RelationBinaire {
      */
     public boolean estAntireflexive() {
         for (int i = 0; i < matAdj.length; i++) {
-            if (matAdj[i][i] == true) return false;
+            if (matAdj[i][i]) return false;
         }
         return true;
     }
@@ -736,11 +736,11 @@ public class RelationBinaire {
     public static void main(String[] args) {
 
 
-        boolean[][] toR = {{true, true, true, true, true}, {false, true, true, true, true}, {false, false, true, true, false}, {false, false, false, true, false}, {false, false, false, false, true}};
+        boolean[][] toR = {{true, false, false, true, true}, {false, true, false, true, true}, {true, false, false, true, true}, {true, true, true, true, true}, {true, true, true, true, true}};
 
         RelationBinaire r1 = new RelationBinaire(toR);
         System.out.println("R1:" + r1.toString());
-        System.out.println("R1.hasse():" + r1.hasse().toString());
+        System.out.println(r1.pred(2).toString());
 //      RelationBinaire r3 = new RelationBinaire(m2);
 
     }
