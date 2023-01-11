@@ -579,8 +579,8 @@ public class RelationBinaire {
     }
 
     public EE predBis(int x) {
-        // je sais pas
-        return new EE(1);
+        RelationBinaire r = new RelationBinaire(transposee(this.matAdj));
+        return r.tabSucc[x];
     }
 
 
@@ -1023,11 +1023,11 @@ public class RelationBinaire {
             test = verifCNSferOrdo(1, 4);
         }
         */ // A regler
-        boolean[][] matrice = {{false, false, false}, {false, false, false}, {false, false, false}};
+        boolean[][] matrice = {{true, true, true}, {false, false, true}, {false, false, true}};
         RelationBinaire r = new RelationBinaire(matrice);
         System.out.println("R =" + r);
-        System.out.println(r.estVide());
-        System.out.println(r.estVideBis());
+        System.out.println(r.pred(2));
+        System.out.println(r.predBis(2));
     }
 
 
