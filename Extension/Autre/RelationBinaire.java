@@ -769,6 +769,10 @@ public class RelationBinaire {
         return finale;
     }
 
+    public RelationBinaire ferTransBis() {
+        return this;
+    }
+
 //______________________________________________
 
     /**

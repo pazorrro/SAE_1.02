@@ -8,7 +8,7 @@
 complementaireBis, differenceBis, estIncluseBis, estEgaleBis, 
 succBis (rien à faire si?),
 estReflexiveBis, estAntireflexiveBis, estSymetriqueBis, afficheDiversBis
-estAntisymetriqueBis, estTransitiveBis
+estAntisymetriqueBis, estTransitiveBis, hasseBis, estRelOrdreBis
 - extention 3 (presque finie)
 - Extention 4 
 - Extension 5
@@ -16,7 +16,7 @@ estAntisymetriqueBis, estTransitiveBis
 # Ce qui reste à faire
 
 - Hasse pour la version base
-- Extention 2 ->  predBis,  estRelOrdreBis, hasseBis, ferTransBis, 
+- Extention 2 ->  predBis, , ferTransBis, 
 - descendantBis
 
 
