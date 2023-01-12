@@ -26,7 +26,7 @@ public class RelationBinaire {
             EE ee = new EE(nb);
             tabSucc[i] = ee;
         }
-    }
+    }// ceci est un test
 
     //______________________________________________
 
