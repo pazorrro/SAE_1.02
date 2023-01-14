@@ -67,4 +67,11 @@ public class Trait {
         c = new Color(R, G, B);
         draw();
     }
+
+    public void efface(){
+        System.out.println("liste : ");
+        InstanceList.clear();
+        System.out.println("liste : ");
+        System.out.println(InstanceList);
+    }
 }
