@@ -12,13 +12,12 @@ estAntisymetriqueBis, estTransitiveBis, hasseBis, estRelOrdreBis, predBis
 - extention 3 (presque finie)
 - Extention 4 
 - Extension 5
+- Extension 6
 
 # Ce qui reste à faire
 
-- Hasse pour la version base
 - Extention 2 ->  ferTransBis
 - descendantBis
 
 
-- Extension 6
 - Extension 7

@@ -1,3 +1,4 @@
+import java.lang.ref.Cleaner;
 import java.util.Random;
 
 public class RelationBinaire {
@@ -313,11 +314,6 @@ public class RelationBinaire {
         return true;
     }
 
-    public boolean estVideBis() {
-        return m == 0;
-    }
-
-
 //______________________________________________
 
 
@@ -326,14 +322,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est pleinee (contient tous les couples d'éléments de E)
      */
     public boolean estPleine() {
-        for (int i = 0; i < n; i++) {
-            if (tabSucc[i].getCardinal() != n) return false;
-        }
-        return true;
-    }
-
-    public boolean estPleineBis() {
-        return m == n * n;
+        return this.m == this.n * this.n;
     }
 
 //______________________________________________
@@ -561,6 +550,10 @@ public class RelationBinaire {
         return new EE(this.tabSucc[x]);
     }
 
+    public EE succBis(int x) {
+        return new EE(this.tabSucc[x]);
+    } // on peut rien modifier si ?
+
 //______________________________________________
 
 
@@ -570,19 +563,13 @@ public class RelationBinaire {
      */
     public EE pred(int x) {
         EE e = new EE(this.n);
-        for (int i = 0; i < this.tabSucc.length; i++) {
-            if (tabSucc[i].contient(x)) {
+        for (int i = 0; i < this.n; i++) {
+            if (this.matAdj[i][x]) {
                 e.ajoutElt(i);
             }
         }
         return e;
     }
-
-    public EE predBis(int x) {
-        RelationBinaire r = new RelationBinaire(transposee(this.matAdj));
-        return r.tabSucc[x];
-    }
-
 
 //______________________________________________
 
@@ -624,7 +611,7 @@ public class RelationBinaire {
     public boolean estAntireflexiveBis() {
         RelationBinaire r = new RelationBinaire(opBool(this.matAdj, this.matAdj, 3));
         RelationBinaire r1 = new RelationBinaire(this.n, true);
-        return r.estIncluse(this);
+        return r1.estIncluse(r);
     }
 
 //______________________________________________
@@ -659,7 +646,7 @@ public class RelationBinaire {
     public boolean estAntisymetrique() {
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
-                if (i != j && matAdj[i][j] == matAdj[j][i]) return false;
+                if (matAdj[i][j] && matAdj[j][i] && i != j) return false;
             }
         }
         return true;
@@ -691,9 +678,7 @@ public class RelationBinaire {
     }
 
     public boolean estTransitiveBis() {
-        RelationBinaire r = new RelationBinaire(this.multiplier(this));
-        if (r.estIncluse(this)) return true;
-        return false;
+        return true;
     }
 
 //______________________________________________
@@ -718,18 +703,16 @@ public class RelationBinaire {
      * pré-requis : aucun
      * résultat : la relation binaire associée au diagramme de Hasse de this
      */
-    public RelationBinaire hasse() {
+    public RelationBinaire hasse() { 
         RelationBinaire r = new RelationBinaire(this); // crée une relation entièrement positive
 
-        for (int i = 0; i < this.matAdj.length; i++) {
-            r.matAdj[i][i] = false;
-        } // retire les boucles (préalable nécessaire)
+        for(int i = 0; i<this.matAdj.length; i++) {r.matAdj[i][i] = false;} // retire les boucles (préalable nécessaire)
 
         for (int i = 0; i < this.n; i++) { // tous les constituants de this
-            for (int j = 0; j < this.n; j++) { // recherche des successeurs de i
-                if (this.sansBoucles().tabSucc[i].contient(j)) { // si j est un successeur de i
-                    for (int k = 0; k < this.m; k++) { // recherche des successeurs de j
-                        if (this.sansBoucles().tabSucc[j].contient(k) && this.sansBoucles().tabSucc[i].contient(k)) { // si k est un successeur de j mais aussi de i
+            for(int j = 0; j<this.n; j++){ // recherche des successeurs de i
+                if(this.sansBoucles().tabSucc[i].contient(j)){ // si j est un successeur de i
+                    for(int k = 0; k<this.m; k++){ // recherche des successeurs de j
+                        if(this.sansBoucles().tabSucc[j].contient(k) && this.sansBoucles().tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
                             r.matAdj[i][k] = false; // retire les éléments voulus de la relation
                         }
                     }
@@ -740,15 +723,7 @@ public class RelationBinaire {
     }
 
     public RelationBinaire hasseBis() {
-        RelationBinaire r = new RelationBinaire(this);
-        r = r.sansBoucles().difference(r.sansBoucles().multiplier(r.sansBoucles()));
-        // La différence de r (sans les boucles) avec r²
-        return r;
-    }
-
-    // Multiplie this avec r
-    public RelationBinaire multiplier(RelationBinaire r) {
-        return new RelationBinaire(produit(this.matAdj, r.matAdj));
+        return this;
     }
 
 
@@ -783,10 +758,6 @@ public class RelationBinaire {
         }
         RelationBinaire finale = new RelationBinaire(r.tabSucc);
         return finale;
-    }
-
-    public RelationBinaire ferTransBis() {
-        return this;
     }
 
 //______________________________________________
@@ -957,9 +928,9 @@ public class RelationBinaire {
         boolean prouve = true;
         for (int i = 0; i < nbRel; i++) {
             System.out.println("Recherche de matrice relation d'odre en cours...");
-            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double) (Ut.randomMinMax(0, 100) / 100));
+            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(0, 100)/100));
             while (!r.estRelOrdre()) {
-                r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double) (Ut.randomMinMax(0, 100) / 100));
+                r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(0, 100)/100));
             }
             r.union(r.avecBoucles());
             r.afficheDivers();
@@ -973,14 +944,14 @@ public class RelationBinaire {
     // EXTENTION 5 - Fermeture ordonnée
     //
 
-    private boolean CSNOrdo() {
+    private boolean CSNOrdo(){
         return this.ferTrans().estAntisymetrique() && !this.estVide(); // vérifier si la fermeture transitive n'enlèvera pas le caractère antisymétrique de la relation
     }
 
-    public static boolean verifCNSferOrdo(int nbRel, int cardMax) {
-        for (int i = 0; i < 5; i++) {
+    public static boolean verifCNSferOrdo(int nbRel, int cardMax){
+        for(int i = 0; i<5; i++){
             // Si la relation obtenue après ferOrdonnee est vide
-            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double) (Ut.randomMinMax(1, 100) / 100.0));
+            RelationBinaire r = new RelationBinaire(Ut.randomMinMax(2, cardMax), (double)(Ut.randomMinMax(1, 100)/100.0));
             boolean prevCNS = r.CSNOrdo();
             System.out.println(r + "\nEst-elle ordonnable ? " + prevCNS);
             if (r.ferOrdonnee().estVide() == prevCNS) return false; // Si c'est vide alors qu'on a dit le contraire
@@ -989,24 +960,25 @@ public class RelationBinaire {
         return true;
     }
 
-    public void makeItReflexif(RelationBinaire r) {
+    public void makeItReflexif(RelationBinaire r){
         r = r.avecBoucles();
     }
 
-    public void makeItTransitif(RelationBinaire r) {
+    public void makeItTransitif(RelationBinaire r){
         r.union(r.ferTrans());
     }
 
-    public RelationBinaire ferOrdonnee() { // renvoie une relation binaire si elle est ordonnée, sinon renvoie une relation binaire vide
+    public RelationBinaire ferOrdonnee(){ // renvoie une relation binaire si elle est ordonnée, sinon renvoie une relation binaire vide
         RelationBinaire r = new RelationBinaire(this);
         makeItReflexif(r);
         makeItTransitif(r);
         // Si on fait une fonction "MakeItAntisymétrique", ça demandera de réduire R, et du coup ce sera pas bon car 
         // la fermeture Ordonnée doit contenir R
-        if (r.estAntisymetrique()) { // Donc si elle est antisymétrique, alors on y est parvenu (à savoir que makeItTransitif
-            // peut possiblement la rendre non-antisymétrique)
+        if(r.estAntisymetrique()){ // Donc si elle est antisymétrique, alors on y est parvenu (à savoir que makeItTransitif 
+                                   // peut possiblement la rendre non-antisymétrique)
             return r;
-        } else { // et là c'est le cas où on peut rien faire sans réduire R
+        }
+        else { // et là c'est le cas où on peut rien faire sans réduire R
             return new RelationBinaire(0, 0.0);
         }
     }
@@ -1016,18 +988,47 @@ public class RelationBinaire {
     //
 
 
-    public static void main(String[] args) {
-        /*
-        boolean test = verifCNSferOrdo(1000, 4);
-        while (test != false){
-            test = verifCNSferOrdo(1, 4);
+    // Renvoie un ensemble d'entier qui n'ont pas de prédecesseur dans la relation, sans prendre en compte les successeurs de EE privé.
+    private EE sansPredecesseur(EE prive){
+        EE e = new EE(this.n);
+        for(int i = 0; i<this.n; i++){e.ajoutElt(i);} // Crée l'ensemble E
+
+        EE allSucc = new EE(this.n); // l'union de tous les successeurs de chaque élément de E (sauf ceux de EE prive)
+        for(int i = 0; i<this.n; i++){
+            if(!prive.contient(i)){ // privé des successeurs de chaque élément de EE prive
+                for(int j = 0; j<this.n; j++){
+                    if(this.tabSucc[i].contient(j)){
+                        allSucc.ajoutElt(j);
+                    }
+                }
+            }
         }
-        */ // A regler
-        boolean[][] matrice = {{true, true, true}, {false, false, true}, {false, false, true}};
-        RelationBinaire r = new RelationBinaire(matrice);
-        System.out.println("R =" + r);
-        System.out.println(r.pred(2));
-        System.out.println(r.predBis(2));
+        return e.difference(allSucc); // E - (l'union de tous les successeurs de chaque élément de E (sauf ceux de EE prive))
+    }
+
+    public EE[] seqNiveau(){
+        EE[] seq = new EE[this.n];
+        for(int i = 0; i<this.n; i++){
+            EE prive = new EE(this.n); // résultats des précédents niveaux
+            for(int j = 0; j<i; j++){
+                prive = prive.union(seq[j]);
+            }
+            seq[i] = new EE(this.sansPredecesseur(prive).difference(prive));
+            System.out.println();
+        }
+        return seq;
+    }
+
+
+    public static void main(String[] args) {
+
+        boolean[][] m1 = {{false, true, false, false, false}, {false, false, true, false, true}, {false, false, false, true, false}, {false, false, false, false, false}, {false, false, false, false, false}};
+        RelationBinaire r = new RelationBinaire(m1);
+        EE[] seqNiv = r.seqNiveau();
+        for(int i = 0; i<seqNiv.length; i++){
+            System.out.println("seqNiveau[" + i + "] = " + seqNiv[i]);
+        }
+
     }
 
 
