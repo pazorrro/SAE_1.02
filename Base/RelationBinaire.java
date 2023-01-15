@@ -23,10 +23,7 @@ public class RelationBinaire {
         this.matAdj = new boolean[nb][nb]; // Nous partons du principe que la matrice est de taille maximale (n*n);
         this.m = 0;
         this.tabSucc = new EE[nb]; // de même, nous partons du principe que le tableau a au maximum n successeurs
-        for (int i = 0; i < nb; i++) {
-            EE ee = new EE(nb);
-            tabSucc[i] = ee;
-        }
+        for (int i = 0; i < nb; i++) {tabSucc[i] = new EE(nb);} 
     }
 
     //______________________________________________
@@ -536,6 +533,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est réflexive
      */
     public boolean estReflexive() {
+        if(this.estVide()) return false;
         for (int i = 0; i < matAdj.length; i++) {
             if (!matAdj[i][i]) return false;
         }
@@ -564,6 +562,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est symétrique
      */
     public boolean estSymetrique() {
+        if(this.estVide()) return false;
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
                 if (matAdj[i][j] != matAdj[j][i]) return false;
@@ -580,6 +579,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est antisymétrique
      */
     public boolean estAntisymetrique() {
+        if(this.estVide()) return false;
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
                 if (i != j && matAdj[i][j] == matAdj[j][i]) return false;
@@ -596,6 +596,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est transitive
      */
     public boolean estTransitive() {
+        if(this.estVide()) return false;
         for (int i = 0; i < matAdj.length; i++) {
             for (int j = 0; j < matAdj.length; j++) {
                 for (int k = 0; k < matAdj.length; k++) {
@@ -614,6 +615,7 @@ public class RelationBinaire {
      * résultat : vrai ssi this est une relation d'ordre
      */
     public boolean estRelOrdre() {
+        if(this.estVide()) return false;
         return this.estReflexive() && this.estAntisymetrique() && this.estTransitive();
     }
 
@@ -624,23 +626,16 @@ public class RelationBinaire {
      * pré-requis : aucun
      * résultat : la relation binaire associée au diagramme de Hasse de this
      */
-    public RelationBinaire hasse() { // a revoir
-        RelationBinaire r = new RelationBinaire(this); // crée une relation entièrement positive
+    public RelationBinaire hasse() {
+        RelationBinaire r = new RelationBinaire(this);
+        r = r.sansBoucles().difference(r.sansBoucles().multiplier(r.sansBoucles()));
+        // La différence de r (sans les boucles) avec r²
+        return r;
+    }
 
-        for(int i = 0; i<this.matAdj.length; i++) {r.matAdj[i][i] = false;} // retire les boucles (préalable nécessaire)
-
-        for (int i = 0; i < this.n; i++) { // tous les constituants de this
-            for(int j = 0; j<this.n; j++){ // recherche des successeurs de i
-                if(this.sansBoucles().tabSucc[i].contient(j)){ // si j est un successeur de i
-                    for(int k = 0; k<this.m; k++){ // recherche des successeurs de j
-                        if(this.sansBoucles().tabSucc[j].contient(k) && this.sansBoucles().tabSucc[i].contient(k)){ // si k est un successeur de j mais aussi de i
-                            r.matAdj[i][k] = false; // retire les éléments voulus de la relation
-                        }
-                    }
-                }
-            }
-        }
-        return new RelationBinaire(r.matAdj);
+    // Multiplie this avec r
+    public RelationBinaire multiplier(RelationBinaire r){
+        return new RelationBinaire(produit(this.matAdj, r.matAdj));
     }
 
     //______________________________________________
@@ -734,15 +729,7 @@ public class RelationBinaire {
     //______________________________________________
 
     public static void main(String[] args) {
-
-
-        boolean[][] toR = {{true, false, false, true, true}, {false, true, false, true, true}, {true, false, false, true, true}, {true, true, true, true, true}, {true, true, true, true, true}};
-
-        RelationBinaire r1 = new RelationBinaire(toR);
-        System.out.println("R1:" + r1.toString());
-        System.out.println(r1.pred(2).toString());
-//      RelationBinaire r3 = new RelationBinaire(m2);
-
+        // faites vos tests ici
     }
 
 

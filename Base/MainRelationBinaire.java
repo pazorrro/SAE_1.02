@@ -38,21 +38,25 @@ public class MainRelationBinaire {
 
         System.out.println("\n\n");
 
+        System.out.println("Bonjour et bienvenue dans le programme de test de la classe RelationBinaire !\n\n");
+        System.out.println("A l'issue de la demande de saisie, vous aurez 5 relations binaires à disposition, \n");
+        System.out.println("R0 vide, R1= '=', R2 = '<=', R3 une relation binaire dépendant de la probabilité qui va suivre, \n");
+        System.out.println("puis nous afficherons les propriétés de chacunes. \n");
 
-        System.out.println("Veuillez Saisir un entier positif");
+        System.out.print("Saisissez un entier positif pour la taille de votre relation binaire : ");
 
         int nb = Ut.saisirEntier();
         while (nb <= 0) {
-            System.out.println("Votre réponses n'est pas correcte. \nVeuillez Saisir un entier positif");
+            System.out.print("\nVotre réponses n'est pas correcte. \nSaisissez un entier positif pour la taille de votre relation binaire : ");
             nb = Ut.saisirEntier();
         }
 
 
-        System.out.println("Veuillez Saisir un réel compris entre 0 et 1");
+        System.out.print("\nSaisissez maintenant la probabilité que chaque couple appartienne à votre relation binaire (entre 0 et 1 exclus): ");
 
         double p = Ut.saisirDouble();
         while (p >= 1 || p <= 0) {
-            System.out.println("Votre réponses n'est pas correcte. \nVeuillez Saisir un réel compris entre 0 et 1");
+            System.out.println("\nVotre réponses n'est pas correcte. \nSaisissez maintenant la probabilité que chaque couple appartienne à votre relation binaire (entre 0 et 1 exclus): ");
             p = Ut.saisirDouble();
         }
 
@@ -61,14 +65,14 @@ public class MainRelationBinaire {
         RelationBinaire r1 = new RelationBinaire(nb, true);
         RelationBinaire r2 = new RelationBinaire(nb, false);
         RelationBinaire r3 = new RelationBinaire(nb, p);
-        RelationBinaire r4 = new RelationBinaire(nb, 1.0); // <== comme ça // pleine avec quel constructeur ?
+        RelationBinaire r4 = new RelationBinaire(nb, 1.0);
 
         // on construit un tableau des relations binaires pour faciliter l'affichage
         RelationBinaire[] ensRelation = {r0, r1, r2, r3, r4};
 
 
         for (int i = 0; i < 4; i++) {
-            System.out.println("\n\n ---\n\n");
+            System.out.println("\n\n --- $$ --- $$ --- $$ --- $$ --- \n\n");
             System.out.println("Relation Binaire n°" + (i + 1) + "\n");
             ensRelation[i].afficheDivers();
         }
